@@ -1,5 +1,6 @@
 import speech_recognition as sr
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
 import time
 
@@ -27,8 +28,7 @@ def search_youtube(query):
     options.add_argument("--no-sandbox")  
 
 
-    service = webdriver.ChromeService('../chromedriver-mac-arm64/chromedriver')  
-    driver=webdriver.Chrome(service=service, options=options)
+    driver=webdriver.Chrome(service=ChromeService(), options=options)
     driver.get("https://www.youtube.com/")
     search_box = driver.find_element_by_xpath("//input[@id='search']")
     search_box.send_keys(query)
