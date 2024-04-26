@@ -2,6 +2,8 @@ import speech_recognition as sr
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
 import time
 
 # Function to recognize speech
@@ -30,7 +32,11 @@ def search_youtube(query):
 
     driver=webdriver.Chrome(service=ChromeService(), options=options)
     driver.get("https://www.youtube.com/")
-    search_box = driver.find_element_by_xpath("//input[@id='search']")
+    time.sleep(3)
+
+
+    search_box = driver.find_element(by=By.XPATH, value="//input[@id='search']")
+    # search_box = driver.find_element_by_xpath("//input[@id='search']")
     search_box.send_keys(query)
     search_box.send_keys(Keys.RETURN)
     time.sleep(5) 
@@ -40,8 +46,11 @@ if __name__ == "__main__":
     while True:
         command = recognize_speech().lower()
         if "open chrome" in command:
-            service = webdriver.ChromeService('../chromedriver-mac-arm64/chromedriver')  
-            driver=webdriver.Chrome(service=service)
+            options=webdriver.ChromeOptions()
+            options.add_argument("--no-sandbox")  
+
+
+            driver=webdriver.Chrome(service=ChromeService(), options=options)
             driver.get("https://www.youtube.com/")
             time.sleep(3)
             driver.quit()
