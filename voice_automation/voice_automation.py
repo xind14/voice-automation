@@ -27,12 +27,13 @@ def recognize_speech():
 # Function to open Chrome and search on YouTube
 def search_youtube(query):
     options=webdriver.ChromeOptions()
-    options.add_argument("--no-sandbox")  
+    options.add_experimental_option("detach", True)
+    # options.add_argument("--no-sandbox")  
 
 
     driver=webdriver.Chrome(service=ChromeService(), options=options)
     driver.get("https://www.youtube.com/")
-    time.sleep(3)
+    time.sleep(2)
 
 
     search_box = driver.find_element(by=By.XPATH, value="//input[@id='search']")
@@ -40,7 +41,7 @@ def search_youtube(query):
     search_box.send_keys(query)
     search_box.send_keys(Keys.RETURN)
     time.sleep(5) 
-    driver.quit()
+    # driver.quit()
 
 if __name__ == "__main__":
     while True:
@@ -49,11 +50,10 @@ if __name__ == "__main__":
             options=webdriver.ChromeOptions()
             options.add_argument("--no-sandbox")  
 
-
             driver=webdriver.Chrome(service=ChromeService(), options=options)
             driver.get("https://www.youtube.com/")
             time.sleep(3)
-            driver.quit()
+            # driver.quit()
         elif "search youtube for" in command:
             query = command.replace("search youtube for", "").strip()
             search_youtube(query)
