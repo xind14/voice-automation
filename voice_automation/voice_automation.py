@@ -61,3 +61,7 @@ if __name__ == "__main__":
             break
         else:
             print("Command not recognized")
+
+# notes for tmrw: make it so user doesnt have to say the same command like can you search, go to youtube and search etc
+# add name so like only hey blank activates it to start listening
+# make it so it opens YT to your page that is logged in to user account 
