@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
+from gtts import gTTS
 import time
 
 # Function to recognize speech
@@ -42,6 +43,23 @@ def search_youtube(query):
     search_box.send_keys(Keys.RETURN)
     time.sleep(5) 
     # driver.quit()
+
+def process_command(command):
+    if any(keyword in command for keyword in ["search youtube for", "search on youtube"]):
+        query=command.split('search  youtube for')[-1].strip()
+        search_youtube(query)
+    elif any(keyword in command for keyword in ['open chrome', 'open browser']):
+        options=webdriver.ChromeOptions()
+        options.add_argument("--no-sandbox")
+        driver=webdriver.Chrome(service=ChromeService(), options=options)
+
+        driver.get("https://www.youtube.com/")
+        time.sleep(3)
+    elif "exit" in command:
+        return False
+    else:
+        print("Command not recognized")
+    return True
 
 if __name__ == "__main__":
     while True:
