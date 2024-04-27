@@ -72,7 +72,7 @@ def process_command(command):
 if __name__ == "__main__":
     while True:
         command = recognize_speech().lower()
-        if "hey" in command and "blank" in command:
+        if "hey" in command and "ayana" in command:
             respond("How can I assist you?")
             while True:
                 next_command = recognize_speech().lower()
