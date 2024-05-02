@@ -59,11 +59,10 @@ def search_google(query):
     driver.get("https://www.google.com/")
     time.sleep(2)
 
-    search_box = driver.find_element(by=By.XPATH, value="//input[@id='input']")
+    search_box = driver.find_element(by=By.NAME, value="q")  
     search_box.send_keys(query)
     search_box.send_keys(Keys.RETURN)
     time.sleep(5)
-
 
 def process_command(command):
     if "open chrome" in command:
