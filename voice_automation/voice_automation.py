@@ -50,6 +50,21 @@ def search_youtube(query):
     time.sleep(5) 
     # driver.quit()
 
+
+def search_google(query):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("detach", True)
+
+    driver = webdriver.Chrome(service=ChromeService(), options=options)
+    driver.get("https://www.google.com/")
+    time.sleep(2)
+
+    search_box = driver.find_element(by=By.XPATH, value="//input[@id='input']")
+    search_box.send_keys(query)
+    search_box.send_keys(Keys.RETURN)
+    time.sleep(5)
+
+
 def process_command(command):
     if "open chrome" in command:
         options = webdriver.ChromeOptions()
@@ -62,6 +77,10 @@ def process_command(command):
         query = command.replace("search youtube for", "").strip()
         search_youtube(query)
         respond(f"Searching YouTube for {query}.")
+    elif "search google for" in command:
+        query=command.replace("search google for", "").strip()
+        search_google(query)
+        respond(f"Searching Google for {query}.")
     elif "exit" in command:
         respond("Exiting.")
         return False
