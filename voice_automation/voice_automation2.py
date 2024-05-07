@@ -1,11 +1,11 @@
 import speech_recognition as sr
-from gtts import gTTS
-import os
-import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from gtts import gTTS
+import os
+import time
 
 def recognize_speech():
     recognizer = sr.Recognizer()
@@ -44,7 +44,7 @@ def search_youtube(query):
     search_box.send_keys(Keys.RETURN)
     time.sleep(2) 
 
-    return True  
+    return True  # Return True to indicate successful search
 
 def search_google(query):
     options = webdriver.ChromeOptions()
@@ -59,7 +59,7 @@ def search_google(query):
     search_box.send_keys(Keys.RETURN)
     time.sleep(2)
 
-    return True  
+    return True  # Return True to indicate successful search
 
 def process_command(command):
     if "open chrome" in command:
@@ -71,13 +71,11 @@ def process_command(command):
         respond("Chrome opened successfully.")
     elif "search youtube for" in command:
         query = command.replace("search youtube for", "").strip()
-        respond(f"Searching YouTube for {query}.")  
-
+        respond(f"Searching YouTube for {query}.")  # Generate response before search
         search_youtube(query)
     elif "search google for" in command:
         query = command.replace("search google for", "").strip()
-        respond(f"Searching Google for {query}.")  
-        
+        respond(f"Searching Google for {query}.")  # Generate response before search
         search_google(query)
     elif "exit" in command:
         respond("Exiting.")
@@ -85,3 +83,17 @@ def process_command(command):
     else:
         respond("Command not recognized")
     return True
+
+if __name__ == "__main__":
+    while True:
+        command = recognize_speech().lower()
+        if "hey" in command and "ayana" in command:
+            respond("How can I assist you?")
+            while True:
+                next_command = recognize_speech().lower()
+                if next_command and not process_command(next_command):
+                    break
+        elif "exit" in command:
+            break
+        else:
+            print("Command not recognized")
