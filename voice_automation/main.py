@@ -3,6 +3,10 @@ import hand_tracking
 
 if __name__ == "__main__":
     while True:
+        print("Checking for gesture...")
+        hand_tracking.process_gesture()
+
+        print("Checking for voice command...")
         command = voice_automation.recognize_speech().lower()
         if "hey" in command and "ayana" in command:
             voice_automation.respond("How can I assist you?")
